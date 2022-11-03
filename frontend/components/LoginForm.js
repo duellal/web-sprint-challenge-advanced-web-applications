@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import PT from 'prop-types'
-import axiosWithAuth from '../axios'
 
 const initialFormValues = {
   username: '',
   password: '',
 }
-export default function LoginForm(props) {
+export default function LoginForm({ login }) {
   const [values, setValues] = useState(initialFormValues)
-  // ✨ where are my props? Destructure them here
-  const { login } = props
 
   const onChange = evt => {
     const { id, value } = evt.target

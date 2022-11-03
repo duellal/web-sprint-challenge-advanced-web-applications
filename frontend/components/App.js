@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
 import Articles from './Articles'
 import LoginForm from './LoginForm'
@@ -44,7 +44,7 @@ export default function App() {
     setSpinnerOn(true)
 
     axiosWithAuth()
-      .post(`http://localhost:9000/api/login`, { username, password })
+      .post(loginUrl, { username, password })
       .then(res => {
         localStorage.setItem('token', res.data.token)
         setMessage(res.data.message)
@@ -70,9 +70,8 @@ export default function App() {
     setSpinnerOn(true)
 
     axiosWithAuth()
-      .get(`http://localhost:9000/api/articles`)
+      .get(articlesUrl)
       .then(res => {
-        console.log(res)
         setArticles(res.data.articles)
         setMessage(res.data.message)
         setSpinnerOn(false)
