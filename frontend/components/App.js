@@ -28,18 +28,9 @@ export default function App() {
     // and a message saying "Goodbye!" should be set in its proper state.
     // In any case, we should redirect the browser back to the login screen,
     // using the helper above.
-    axiosWithAuth()
-      .post(`http://localhost:9000/api`)
-      .then(res => {
-        // localStorage.removeItem('token', res.data.token)
-        console.log('Logout res:', res)
-        // setMessage('Goodbye!')
-        // redirectToLogin
-
-      })
-      .catch(err => {
-        console.log('Logout Error:', err)
-      })
+    localStorage.removeItem('token')
+    setMessage('Goodbye!')
+    redirectToLogin()
   }
 
   const login = ({ username, password }) => {
