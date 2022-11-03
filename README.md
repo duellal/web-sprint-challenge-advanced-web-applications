@@ -69,7 +69,7 @@ In order to complete this project, you must fix the following modules:
 - [frontend/components/Articles.js](frontend/components/Articles.js)
 - [frontend/components/ArticleForm.js](frontend/components/ArticleForm.js)
 
-You must also also test the Spinner component in this module:
+You must also test the Spinner component in this module:
 
 - [frontend/components/Spinner.test.js](frontend/components/Spinner.test.js)
 
