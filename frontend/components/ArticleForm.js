@@ -39,18 +39,19 @@ export default function ArticleForm(props) {
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
     if (currentArticleId) {
-      const currentArticle = articles.find(eachArticle => currentArticleId === eachArticle.article_id)
+      // const currentArticle = articles.find(eachArticle => currentArticleId === eachArticle.article_id)
 
-      updateArticle({ currentArticleId, currentArticle })
+      // console.log(`Current Article:`, currentArticle)
+      // console.log(`Current Article Id:`, currentArticleId)
 
-      setValues(initialFormValues)
-      setCurrentArticleId()
+      updateArticle(currentArticleId, values)
     }
     else {
       postArticle(values)
-      setValues(initialFormValues)
-      setCurrentArticleId()
     }
+
+    setValues(initialFormValues)
+    setCurrentArticleId()
   }
 
   const isDisabled = () => {

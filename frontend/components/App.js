@@ -17,6 +17,8 @@ export default function App() {
   const [currentArticleId, setCurrentArticleId] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
 
+  console.log(`Articles:`, articles)
+
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
   const redirectToLogin = () => { return navigate('/') }
@@ -54,6 +56,7 @@ export default function App() {
       .catch(err => {
         console.log('Login Error:', err)
         setSpinnerOn(false)
+        setMessage(err.response.data.message)
       })
   }
 
@@ -79,8 +82,12 @@ export default function App() {
       .catch(err => {
         if (err.response.status === 401) {
           redirectToLogin()
+          setMessage(err.response.data.message)
         }
-        else { console.log('Get Articles Error:', err) }
+        else {
+          console.log('Get Articles Error:', err)
+          setMessage(err.response.data.message)
+        }
 
         setSpinnerOn(false)
       })
@@ -100,21 +107,66 @@ export default function App() {
         setArticles(articles, article)
         setSpinnerOn(false)
         setMessage(res.data.message)
+        getArticles()
       })
       .catch(err => {
         console.log('Submitted Article Error:', err)
+
         setSpinnerOn(false)
         setMessage(err.response.data.message)
       })
   }
 
+  //Update Article is currently not working - it has the article_id and article as undefined.
+  //It looks like everything is set up properly in order to get the props for these values - I cannot find where I went wrong
+  //Need to come back to to finish MVP
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
+    setSpinnerOn(true)
+    setMessage('')
+
+    console.log(`UpdateArticle Article Id:`, article_id)
+    console.log(`UpdateArticle Article:`, article)
+
+    axiosWithAuth()
+      .put(articlesUrl + `/${article_id}`, article)
+      .then(res => {
+        console.log(`Updating Article Response:`, res)
+
+        setSpinnerOn(false)
+        getArticles()
+      })
+      .catch(err => {
+        console.log(`Updating Article Error:`, err)
+
+        setSpinnerOn(false)
+        setMessage(err.response.data.message)
+      })
   }
 
   const deleteArticle = article_id => {
     // ✨ implement
+    setSpinnerOn(true)
+    setMessage('')
+
+    axiosWithAuth()
+      .delete(articlesUrl + `/${article_id}`)
+      .then(res => {
+        setMessage(res.data.message)
+        setSpinnerOn(false)
+
+        setArticles(articles.filter(article => {
+          article.article_id !== article_id
+        }))
+
+        getArticles()
+      })
+      .catch(err => {
+        console.log(`Delete Error:`, err)
+        setMessage(err.response.data.message)
+        setSpinnerOn(false)
+      })
   }
 
   return (
