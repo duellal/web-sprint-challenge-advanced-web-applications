@@ -39,10 +39,7 @@ export default function ArticleForm(props) {
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
     if (currentArticleId) {
-      console.log(`ArticleForm current Article ID:`, currentArticleId)
-      console.log(`ArticleForm current Article values:`, values)
-
-      updateArticle(currentArticleId, values)
+      updateArticle({ article_id: currentArticleId, article: values })
     }
     else {
       postArticle(values)
@@ -61,8 +58,7 @@ export default function ArticleForm(props) {
     else { return false }
   }
 
-  const cancelEdit = (evt) => {
-    evt.preventDefault()
+  const cancelEdit = () => {
     setValues(initialFormValues)
   }
 

@@ -17,11 +17,10 @@ export default function App() {
   const [currentArticleId, setCurrentArticleId] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
 
-  console.log(`Articles:`, articles)
-
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
   const redirectToLogin = () => { return navigate('/') }
+  //The creaters wanted the redirectToArticles, but never specified where to utilize it nor did I find a place to use it
   const redirectToArticles = () => { return navigate('/articles') }
 
   const logout = () => {
@@ -117,23 +116,16 @@ export default function App() {
       })
   }
 
-  //Update Article is currently not working - it has the article_id and article as undefined.
-  //It looks like everything is set up properly in order to get the props for these values - I cannot find where I went wrong
-  //Need to come back to to finish MVP
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
     setSpinnerOn(true)
     setMessage('')
 
-    console.log(`App UpdateArticle Article Id:`, article_id)
-    console.log(`App UpdateArticle Article:`, article)
-
     axiosWithAuth()
       .put(articlesUrl + `/${article_id}`, article)
       .then(res => {
-        console.log(`App Updating Article Response:`, res)
-
+        setMessage(res.data.message)
         setSpinnerOn(false)
         getArticles()
       })
