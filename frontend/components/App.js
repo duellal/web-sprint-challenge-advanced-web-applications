@@ -126,19 +126,19 @@ export default function App() {
     setSpinnerOn(true)
     setMessage('')
 
-    console.log(`UpdateArticle Article Id:`, article_id)
-    console.log(`UpdateArticle Article:`, article)
+    console.log(`App UpdateArticle Article Id:`, article_id)
+    console.log(`App UpdateArticle Article:`, article)
 
     axiosWithAuth()
       .put(articlesUrl + `/${article_id}`, article)
       .then(res => {
-        console.log(`Updating Article Response:`, res)
+        console.log(`App Updating Article Response:`, res)
 
         setSpinnerOn(false)
         getArticles()
       })
       .catch(err => {
-        console.log(`Updating Article Error:`, err)
+        console.log(`App Updating Article Error:`, err)
 
         setSpinnerOn(false)
         setMessage(err.response.data.message)
