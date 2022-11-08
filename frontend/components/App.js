@@ -77,7 +77,11 @@ export default function App() {
         setSpinnerOn(false)
       })
       .catch(err => {
-        console.log('Get Articles Error:', err)
+        if (err.response.status === 401) {
+          redirectToLogin()
+        }
+        else { console.log('Get Articles Error:', err) }
+
         setSpinnerOn(false)
       })
   }
@@ -87,6 +91,21 @@ export default function App() {
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
+    setMessage('')
+    setSpinnerOn(true)
+
+    axiosWithAuth()
+      .post(articlesUrl, article)
+      .then(res => {
+        setArticles(articles, article)
+        setSpinnerOn(false)
+        setMessage(res.data.message)
+      })
+      .catch(err => {
+        console.log('Submitted Article Error:', err)
+        setSpinnerOn(false)
+        setMessage(err.response.data.message)
+      })
   }
 
   const updateArticle = ({ article_id, article }) => {
@@ -114,10 +133,18 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
+              <ArticleForm
+                postArticle={postArticle}
+                currentArticleId={currentArticleId}
+                setCurrentArticleId={setCurrentArticleId}
+                articles={articles}
+                updateArticle={updateArticle}
+              />
               <Articles
                 articles={articles}
                 getArticles={getArticles}
+                setCurrentArticleId={setCurrentArticleId}
+                deleteArticle={deleteArticle}
               />
             </>
           } />
