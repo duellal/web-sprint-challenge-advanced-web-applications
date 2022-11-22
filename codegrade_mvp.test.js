@@ -73,7 +73,7 @@ describe('Advanced Applications', () => {
       expect(titleInput()).not.toBeInTheDocument()
       expect(usernameInput()).toBeInTheDocument()
     })
-    test(`[3] Filling out the login form and submitting
+    test.skip(`[3] Filling out the login form and submitting
         - article titles, texts, topics render on the page
         - success message renders on the page
         - Review how to handle authentication with tokens in a React app (using local storage) and how to render data from state.`, async () => {
